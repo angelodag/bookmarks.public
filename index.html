@@ -6,6 +6,14 @@
         <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script type="text/javascript">
 <!--
+
+            /**
+             * Toggle a panel visibility on screen
+             */
+            function showPanel(panel) {
+                $(panel).slideToggle();
+            }
+
             /**
              * Show all bookmarks
              */
@@ -72,8 +80,7 @@
                                 nm = nm.replace(/(^\s+|\s+$)/g, '');
                                 tags[ nm.toLowerCase() ] = 1;
                             }
-                        }
-                        else
+                        } else
                         {
                             tag = tag.replace(/(^\s+|\s+$)/g, '');
                             tags[tag.toLowerCase()] = 1;
@@ -103,8 +110,7 @@
                 var checkbox = document.getElementById("TagsCheck");
                 if (checkbox.checked === true) {
                     appendTags();
-                }
-                else {
+                } else {
                     hideTags();
                 }
             }
@@ -144,8 +150,7 @@
                 var checkbox = document.getElementById("TagsCheck");
                 if (checkbox.checked === true) {
                     showTags();
-                }
-                else {
+                } else {
                     hideTags();
                 }
             }
@@ -200,8 +205,18 @@
                  * Code the launches at page-load-time:
                  */
 
+                /**
+                 * Hide warning about JavaScript and JQuery
+                 */
+                $("#no-script").remove();
+                $("#tags").hide();
+                $("#filter").hide();
+                $("#addBookmark").hide();
+
                 /** Sort the bookmarks */
                 sortBookmarks();
+
+//                $('#bookmarksPanel li:even').css('background-color','#eeeeee');
 
                 /** Populate the tags pane. */
                 populateTags();
@@ -268,10 +283,29 @@
         </script>
         <style type="text/css">
             #tags {
-                width: 50%;
+                top: 0;
+                right: auto;
+                bottom: 0;
+                position: relative;
             }
-            h2 {
-                border-bottom: 1px solid black;
+            #filter{
+                top: auto;
+                right: auto;
+                bottom: auto;
+                position: relative;
+            }
+            #addBookmark{
+                top: auto;
+                right: auto;
+                bottom: auto;
+                position: relative;
+            }
+            #bookmarksPanel {
+                top: 0;
+                right: auto;
+                bottom: 0;
+                position: relative;
+                overflow: scroll;
             }
             .tagfilter {
                 text-decoration: none;
@@ -280,73 +314,71 @@
             #bookmarks {
                 list-style: none;
             }
-            table {
-                width: 100%;
-                padding: 1em;
-            }
-            td {
-                padding: 0.5em;
-                border: 1px solid silver;
-            }
         </style>
     </head>
     <body>
-        <table>
-            <tr>
-                <td rowspan="1" valign="top">
-                    <!-- THE BOOKMARKS -->
-                    <ul class="bookmarks" id="bookmarks">
-                        <li title="debian, planet"><a href="http://planet.debian.org/">Planet Debian</a></li>
-                        <li title="debian, development"><a href="http://www.debian.org/devel/">Debian Developers' Corner</a></li>
-                        <li title="sysadmin, planet"><a href="http://planetsysadmin.com/">Planet Sysadmin</a></li>
-                        <li title="sysadmin, reddit"><a href="http://www.reddit.com/r/sysadmin">Reddit: /r/sysadmin</a></li>
-                        <li title="blog, microsoft"><a href="http://blogs.msdn.com/b/oldnewthing/">The old new thing</a></li>
-                        <li title="blog, personal"><a href="http://blog.steve.org.uk/">Steve Kemp's blog</a></li>
-                        <li title="development, personal"><a href="https://github.com/skx/">Steve Kemp's github account</a></li>
-                        <li title="news"><a href="https://news.ycombinator.com/">Hacker News</a></li>
-                        <li title="news, edinburgh"><a href="http://www.scotsman.com/edinburgh-evening-news">Edinburgh Evening News</a></li>
-                        <li title="pippo pelo, NEws"><a href="http://www.bbc.co.uk/news/">BBC News</a></li>
-                        <li title="personal"><a href="http://static.steve.org.uk/start/">My start page</a></li>
-                        <li title="personal, sysadmin, debian"><a href="http://debian-administration.org/">Debian Administration</a></li>
-                        <li title="sysadmin, stackexchange"><a href="http://serverfault.com/">Server Fault</a></li>
-                        <li title="photography, stackexchange"><a href="http://photo.stackexchange.com/">Photography Exchange</a></li>
-                        <li title="reddit, photography"><a href="http://www.reddit.com/r/photography/">Reddit /r/photography</a></li>
-                        <li><a href="http://www.thepondleith.co.uk/">The Pond, Leith</a></li>
-                    </ul>
-                    <!-- THE END OF BOOKMARKS -->
-                </td>
-                <td id="tags" valign="top">
-                    <fieldset>
-                        <legend><b>Tags</b></legend>
-                        <p id="autotags">
-                        </p>
-                        <p> 
-                            <a title="Show untagged bookmarks" href="#untagged" id="untagged">untagged</a>
-                        </p>
-                        <p> 
-                            <input type="checkbox" name="TagsCheck" id="TagsCheck" value="ShowTags" onclick="toggleTags()"/>Show Tags
-                            <button title="Show all bookmarks" type="button" onclick="clearFilter()">Show All</button>
-                        </p>
-                    </fieldset>
-                    <p> </p>
-                    <fieldset>
-                        <legend><b>Filter Bookmarks </b></legend>
-                        <form id="filter" name="filter" action="#">
-                            <p>Search within bookmarks: <input type="text" name="fill" id="fill" value="" size="50" /></p>
-                        </form>
-                    </fieldset>
-                    <p> </p>
-                    <fieldset>
-                        <legend><b>Add Bookmark </b></legend>
-                        <form id="newForm" name="newForm">
-                            <p>Name: <input type="text" name="newname" id="newName" value="" size="50" /></p>
-                            <p>Link: <input type="text" name="newLink" id="newLink" value="" size="50" /></p>
-                            <p>Tags: <input type="text" name="newTags" id="newTags" value="" size="50" /></p>
-                            <button type="button" onclick="addBookmark()">Add</button>
-                        </form>
-                    </fieldset>
-                </td>
-            </tr>
-        </table>
+        <h1 id="no-script">Javascript and JQuery are required</h1> 
+        <div id="buttonsPanel">
+            <button type="button" id="tagsButton" onclick="showPanel('#tags')">tags</button>
+            <button type="button" id="filterButton" onclick="showPanel('#filter')">filter</button>
+            <button type="button" id="addButton" onclick="showPanel('#addBookmark')">add</button>
+        </div>
+        <div id="tags">
+            <fieldset>
+                <legend><b>Tags</b></legend>
+                <p id="autotags">
+                </p>
+                <p> 
+                    <a title="Show untagged bookmarks" href="#untagged" id="untagged">untagged</a>
+                </p>
+                <p> 
+                    <input type="checkbox" name="TagsCheck" id="TagsCheck" value="ShowTags" onclick="toggleTags()"/>Show Tags
+                    <button title="Show all bookmarks" type="button" onclick="clearFilter()">Show All</button>
+                </p>
+            </fieldset>
+        </div>
+        <p> </p>
+        <div id="filter">
+            <fieldset>
+                <legend><b>Filter Bookmarks </b></legend>
+                <form id="filterForm" name="filter" action="#">
+                    <p>Search within bookmarks:</p> <input type="text" name="fill" id="fill" value="" size="50"/>
+                </form>
+            </fieldset>
+        </div>
+        <p> </p>
+        <div id="addBookmark">
+            <fieldset>
+                <legend><b>Add Bookmark </b></legend>
+                <form id="newForm" name="newForm">
+                    <p>Name: <input type="text" name="newname" id="newName" value="" size="50" /></p>
+                    <p>Link: <input type="text" name="newLink" id="newLink" value="" size="50" /></p>
+                    <p>Tags: <input type="text" name="newTags" id="newTags" value="" size="50" /></p>
+                    <button type="button" onclick="addBookmark()">Add</button>
+                </form>
+            </fieldset>
+        </div>
+        <div id="bookmarksPanel">
+            <!-- THE BOOKMARKS -->
+            <ul class="bookmarks" id="bookmarks">
+                <li title="debian, planet"><a href="http://planet.debian.org/">Planet Debian</a></li>
+                <li title="debian, development"><a href="http://www.debian.org/devel/">Debian Developers' Corner</a></li>
+                <li title="sysadmin, planet"><a href="http://planetsysadmin.com/">Planet Sysadmin</a></li>
+                <li title="sysadmin, reddit"><a href="http://www.reddit.com/r/sysadmin">Reddit: /r/sysadmin</a></li>
+                <li title="blog, microsoft"><a href="http://blogs.msdn.com/b/oldnewthing/">The old new thing</a></li>
+                <li title="blog, personal"><a href="http://blog.steve.org.uk/">Steve Kemp's blog</a></li>
+                <li title="development, personal"><a href="https://github.com/skx/">Steve Kemp's github account</a></li>
+                <li title="news"><a href="https://news.ycombinator.com/">Hacker News</a></li>
+                <li title="news, edinburgh"><a href="http://www.scotsman.com/edinburgh-evening-news">Edinburgh Evening News</a></li>
+                <li title="pippo pelo, NEws"><a href="http://www.bbc.co.uk/news/">BBC News</a></li>
+                <li title="personal"><a href="http://static.steve.org.uk/start/">My start page</a></li>
+                <li title="personal, sysadmin, debian"><a href="http://debian-administration.org/">Debian Administration</a></li>
+                <li title="sysadmin, stackexchange"><a href="http://serverfault.com/">Server Fault</a></li>
+                <li title="photography, stackexchange"><a href="http://photo.stackexchange.com/">Photography Exchange</a></li>
+                <li title="reddit, photography"><a href="http://www.reddit.com/r/photography/">Reddit /r/photography</a></li>
+                <li><a href="http://www.thepondleith.co.uk/">The Pond, Leith</a></li>
+            </ul>
+        </div>
+        <!-- THE END OF BOOKMARKS -->
     </body>
 </html>
