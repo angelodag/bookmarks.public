@@ -1,6 +1,8 @@
 bookmarks.public
 ================
 
+This page is mostly a copy of the one present in the original repository from [where I forked] (https://github.com/skx/bookmarks.public)
+
 This repository contains the single HTML file `index.html`.
 
 The bookmarks file is a template which is designed to be edited by the user,
@@ -45,13 +47,16 @@ In order to save new bookmarks,
 2. add the new bookmark (title, address and tags)
 3. use the browser "save as" to save the modified page.
 
-There is a big caveat, when you want to add a bookmark you do not have to di any other operation like filtering for tag, search or display the tags. 
+There are two caveats: 
+* a big one, when you want to add a bookmark, it has to be performed befire any other operation like filtering for tag, search or display the tags. 
+
 If you save while the pages shows filtered data (generate by the internal javascript) then the page will contain the filtered data.
-If you save while the tags are being shown, the tags will become part of the saved html.
 
-There is another caveat, when you save the page, in the html you will get also the expanded reference to the page's current location, if you move it somewhere else then it will break unless you manually edit the page.
+If you save while the tags are being displayed, the tags will become part of the saved html.
 
-In general the html saved by the browser is rather ugly (long lines, lost alignment...) and this makes difficult to compare different versions of the file. For me , I use a "post-processing" script that keeps the alignment consistent across multiple save operations and removes the reference to the current location and file name (and some minor stuff, you can see it below):
+* a seconds one, when you save the page, in the html you will get also the expanded reference to the page's current location, if you move it somewhere else then it will break unless you manually edit the page.
+
+In general the html saved by the browser is rather ugly (long lines, lost alignment...) and this makes difficult to compare different versions of the file. If you are a version control freak like me, I created a "post-processing" script that keeps the alignment consistent across multiple save operations and removes the reference to the current location and file name (and some minor stuff, you can see it below):
 
 ```
 #!/bin/bash
@@ -77,5 +82,5 @@ If you wish to submit improvements to the javascript code, or layout, then I wel
 
 (If you submit a change feel free to add a link to your homepage/blog/whatever as part of that.  The sample bookmarks are only samples.)
 
-Angelo (This page is mostly a copy of the one present in the original repository from [where I forked] (https://github.com/skx/bookmarks.public))
+Angelo
 --
